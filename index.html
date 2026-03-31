@@ -223,12 +223,19 @@
         <h2>PROMOTION & MENU</h2>       
     </header>
 
-    <!-- 프로모션 배너 -->
-    <div class="slider">
-        <div class="slides">
-            <!-- JS에서 자동으로 클론을 붙일 예정 -->
-            <img src="woman.jpeg" alt="프로모션4">
-            <img src="sns2.png" alt="프로모션3">
+<!-- 프로모션 배너 -->
+<div class="slider">
+    <div class="slides">
+        <!-- 기존 프로모션 (4월 1일 전까지만 노출) -->
+        <img src="woman.jpeg" alt="프로모션4" class="old-promo">
+        <img src="sns2.png" alt="프로모션3" class="old-promo">
+
+        <!-- 신규 프로모션 (4월 1일부터 노출) -->
+        <img src="sns4.png" alt="프로모션1" class="new-promo" style="display:none;">
+        <img src="seed.png" alt="프로모션2" class="new-promo" style="display:none;">
+        <img src="nature.png" alt="초성 이벤트" class="new-promo" style="display:none;">
+    </div>
+</div>
 
             
 
@@ -926,6 +933,30 @@
                 yuzuCard.style.display = 'block'; 
             }
         });
+    </script>
+    <script>
+        window.onload = function() {
+            // 1. 기준 날짜 설정 (2026년 4월 1일 0시 0분)
+            const now = new Date();
+            const targetDate = new Date('2026-03-30T00:00:00');
+
+            // 2. HTML에서 이미지 그룹 가져오기
+            // HTML에서 class="old-promo"와 class="new-promo"를 준 이미지들을 찾습니다.
+            const oldPromos = document.querySelectorAll('.old-promo');
+            const newPromos = document.querySelectorAll('.new-promo');
+
+            // 3. 날짜 비교 후 노출 제어
+            if (now >= targetDate) {
+                // 4월 1일이 되었거나 지났을 때
+                oldPromos.forEach(img => img.style.display = 'none');  // 기존 이미지 숨김
+                newPromos.forEach(img => img.style.display = 'block'); // 새 이미지 보임
+                console.log("새로운 프로모션으로 교체되었습니다!");
+            } else {
+                // 아직 4월 1일 전일 때
+                oldPromos.forEach(img => img.style.display = 'block'); // 기존 이미지 보임
+                newPromos.forEach(img => img.style.display = 'none');  // 새 이미지 숨김
+            }
+        };
     </script>
 
 </body>
