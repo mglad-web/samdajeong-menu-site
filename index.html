@@ -286,37 +286,49 @@
         }
     </style>
 
-    <script>
-        const slides = document.querySelector('.slides');
-        let imgs = Array.from(slides.querySelectorAll('img'));
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const slidesContainer = document.querySelector('.slides');
+        const now = new Date();
+        // 테스트를 위해 3월 30일로 설정되어 있습니다. 
+        // 실제 배포 시에는 '2026-04-01T00:00:00'로 바꾸세요.
+        const targetDate = new Date('2026-03-30T00:00:00'); 
 
-        // 0) 원본 이미지 수 / data-index 부여
-        const realCount = imgs.length;
-        imgs.forEach((img, i) => img.dataset.index = i); // 0..realCount-1
+        // 1. 날짜에 맞춰 불필요한 이미지 '완전 제거'
+        if (now >= targetDate) {
+            document.querySelectorAll('.old-promo').forEach(el => el.remove());
+            document.querySelectorAll('.new-promo').forEach(el => el.style.display = 'block');
+        } else {
+            document.querySelectorAll('.new-promo').forEach(el => el.remove());
+            document.querySelectorAll('.old-promo').forEach(el => el.style.display = 'block');
+        }
 
-        // 1) 클론 생성 (앞: lastClone, 뒤: firstClone)
+        // 2. 남은 이미지들로 슬라이더 재구성
+        let imgs = Array.from(slidesContainer.querySelectorAll('img'));
+        if (imgs.length === 0) return; // 이미지 없으면 중단
+
         const firstClone = imgs[0].cloneNode(true);
         const lastClone = imgs[imgs.length - 1].cloneNode(true);
         firstClone.id = 'first-clone';
         lastClone.id = 'last-clone';
-        slides.appendChild(firstClone);
-        slides.insertBefore(lastClone, slides.firstChild);
+        slidesContainer.appendChild(firstClone);
+        slidesContainer.insertBefore(lastClone, slidesContainer.firstChild);
 
-        // 2) 상태
-        imgs = Array.from(slides.querySelectorAll('img')); // 클론 포함
-        let index = 1;                                     // 시각상 첫 슬라이드 위치
-        let width = imgs[0].clientWidth;
-        slides.style.transform = `translateX(${-width * index}px)`;
+        // 3. 슬라이더 설정 및 시작
+        let allImgs = Array.from(slidesContainer.querySelectorAll('img'));
+        let index = 1;
+        let width = slidesContainer.parentElement.clientWidth;
+        slidesContainer.style.transform = `translateX(${-width * index}px)`;
 
         function moveToIndex(animate = true) {
-            slides.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
-            slides.style.transform = `translateX(${-width * index}px)`;
+            slidesContainer.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
+            slidesContainer.style.transform = `translateX(${-width * index}px)`;
         }
 
-        // 3) 버튼
+        // 버튼 클릭 이벤트
         document.querySelector('.next').addEventListener('click', () => {
-            pause(); // 사용자 조작 시 일시정지
-            if (index >= imgs.length - 1) return;
+            pause();
+            if (index >= allImgs.length - 1) return;
             index++;
             moveToIndex();
         });
@@ -327,71 +339,42 @@
             moveToIndex();
         });
 
-        // 4) 트랜지션 끝나면 클론 위치 보정
-        slides.addEventListener('transitionend', () => {
-            if (imgs[index].id === 'first-clone') {
+        // 무한 루프 보정
+        slidesContainer.addEventListener('transitionend', () => {
+            if (allImgs[index].id === 'first-clone') {
                 index = 1;
                 moveToIndex(false);
             }
-            if (imgs[index].id === 'last-clone') {
-                index = imgs.length - 2;
+            if (allImgs[index].id === 'last-clone') {
+                index = allImgs.length - 2;
                 moveToIndex(false);
             }
         });
 
-        // 5) 자동재생 (필요 시 재생/정지 제어 함수)
+        // 자동재생 설정
         let timer = null;
         function play() {
             if (timer) return;
             timer = setInterval(() => {
-                if (index >= imgs.length - 1) return;
+                if (index >= allImgs.length - 1) return;
                 index++;
                 moveToIndex();
-            }, 6000);
+            }, 5000);
         }
         function pause() {
-            if (!timer) return;
             clearInterval(timer);
             timer = null;
         }
         play();
 
-        // 6) 이미지를 "탭/클릭"하면 → 해당 이미지로 이동 + 정지
-        //    data-index(원본 기준) → 시각 인덱스는 +1 (앞에 lastClone이 끼어 있음)
-        slides.addEventListener('click', (e) => {
-            const img = e.target.closest('img');
-            if (!img) return;
-            const originalIndex = img.dataset.index;
-            if (originalIndex === undefined) {
-                // 클론을 눌렀다면 대응되는 시각 인덱스로 보정
-                if (img.id === 'first-clone') {
-                    pause();
-                    index = imgs.length - 2; // 마지막 실이미지
-                    return moveToIndex();
-                }
-                if (img.id === 'last-clone') {
-                    pause();
-                    index = 1; // 첫 실이미지
-                    return moveToIndex();
-                }
-                return;
-            }
-            pause();
-            index = Number(originalIndex) + 1; // 시각 인덱스 보정
-            moveToIndex();
-        });
-
-        // 7) 터치(모바일) 중 accidental click 방지 & 즉시 정지
-        ['touchstart', 'pointerdown'].forEach(ev =>
-            slides.addEventListener(ev, pause, { passive: true })
-        );
-
-        // 8) 반응형
+        // 화면 크기 조절 대응
         window.addEventListener('resize', () => {
-            width = imgs[0].clientWidth;
+            width = slidesContainer.parentElement.clientWidth;
             moveToIndex(false);
         });
-    </script>
+    });
+</script>
+
     <style>
         .promo-banner {
             background-color: #324870;
@@ -933,30 +916,6 @@
                 yuzuCard.style.display = 'block'; 
             }
         });
-    </script>
-    <script>
-        window.onload = function() {
-            // 1. 기준 날짜 설정 (2026년 4월 1일 0시 0분)
-            const now = new Date();
-            const targetDate = new Date('2026-03-30T00:00:00');
-
-            // 2. HTML에서 이미지 그룹 가져오기
-            // HTML에서 class="old-promo"와 class="new-promo"를 준 이미지들을 찾습니다.
-            const oldPromos = document.querySelectorAll('.old-promo');
-            const newPromos = document.querySelectorAll('.new-promo');
-
-            // 3. 날짜 비교 후 노출 제어
-            if (now >= targetDate) {
-                // 4월 1일이 되었거나 지났을 때
-                oldPromos.forEach(img => img.style.display = 'none');  // 기존 이미지 숨김
-                newPromos.forEach(img => img.style.display = 'block'); // 새 이미지 보임
-                console.log("새로운 프로모션으로 교체되었습니다!");
-            } else {
-                // 아직 4월 1일 전일 때
-                oldPromos.forEach(img => img.style.display = 'block'); // 기존 이미지 보임
-                newPromos.forEach(img => img.style.display = 'none');  // 새 이미지 숨김
-            }
-        };
     </script>
 
 </body>
