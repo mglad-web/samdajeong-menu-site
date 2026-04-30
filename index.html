@@ -170,20 +170,90 @@
         <h2>PROMOTION & MENU</h2>
     </header>
 
-<!-- 프로모션 배너 -->
+<!-- 프로모션 영역 -->
 <div class="slider">
-    <div class="slides">
-        <!-- 4월 프로모션 (4월 1일 ~ 4월 30일까지 노출) -->
-        <img src="sns4.png" alt="4월 프로모션1" class="april-promo" style="display:none;">
-        <img src="seed.png" alt="4월 프로모션2" class="april-promo" style="display:none;">
-        <img src="nature.png" alt="4월 초성 이벤트" class="april-promo" style="display:none;">
-
-        <!-- 5월 프로모션 (5월 1일부터 노출) -->
-        <img src="birth.png" alt="5월 프로모션1" class="may-promo" style="display:none;">
-        <img src="parents.png" alt="5월 프로모션2" class="may-promo" style="display:none;">
-        <img src="family.png" alt="5월 프로모션3" class="may-promo" style="display:none;">
+    <div class="slides" id="promo-slides">
+        <!-- 스크립트가 여기에 이미지를 자동으로 넣습니다 -->
     </div>
+    <button class="arrow prev">&#10094;</button>
+    <button class="arrow next">&#10095;</button>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const slidesContainer = document.getElementById('promo-slides');
+        const now = new Date();
+        
+        // 날짜 설정
+        const mayFirst = new Date('2026-05-01T00:00:00');
+        const aprilFirst = new Date('2026-04-01T00:00:00');
+
+        // 1. 날짜에 따른 이미지 명단 정의
+        let imageFiles = [];
+
+        if (now >= mayFirst) {
+            // 5월 1일부터 보여줄 이미지
+            imageFiles = ['birth.png', 'parents.png', 'family.png'];
+        } else if (now >= aprilFirst) {
+            // 4월 1일부터 4월 30일까지 보여줄 이미지
+            imageFiles = ['sns4.png', 'seed.png', 'nature.png'];
+        } else {
+            // 4월 이전
+            imageFiles = ['woman.jpeg', 'sns2.png'];
+        }
+
+        // 2. 이미지를 화면에 생성
+        if (imageFiles.length === 0) return;
+
+        // 슬라이더 무한 루프를 위해 (마지막이미지 - 전체이미지 - 첫번째이미지) 순서로 배치
+        const contentHtml = [
+            imageFiles[imageFiles.length - 1], // 마지막 복제
+            ...imageFiles,                     // 원본 리스트
+            imageFiles[0]                      // 첫번째 복제
+        ].map(src => `<img src="${src}" alt="Promotion">`).join('');
+
+        slidesContainer.innerHTML = contentHtml;
+
+        // 3. 슬라이더 작동 로직 (VS Code에서 수정 시 이 아래는 건드릴 필요 없음)
+        let index = 1;
+        let images = slidesContainer.querySelectorAll('img');
+        
+        function updateSlider() {
+            const width = slidesContainer.parentElement.clientWidth;
+            slidesContainer.style.transition = 'none';
+            slidesContainer.style.transform = `translateX(${-width * index}px)`;
+        }
+
+        // 초기 위치 잡기
+        window.onload = updateSlider;
+        window.onresize = updateSlider;
+
+        function move(dir) {
+            const width = slidesContainer.parentElement.clientWidth;
+            index += dir;
+            slidesContainer.style.transition = 'transform 0.5s ease-in-out';
+            slidesContainer.style.transform = `translateX(${-width * index}px)`;
+
+            slidesContainer.addEventListener('transitionend', () => {
+                if (index === 0) {
+                    index = images.length - 2;
+                    slidesContainer.style.transition = 'none';
+                    slidesContainer.style.transform = `translateX(${-width * index}px)`;
+                } else if (index === images.length - 1) {
+                    index = 1;
+                    slidesContainer.style.transition = 'none';
+                    slidesContainer.style.transform = `translateX(${-width * index}px)`;
+                }
+            }, { once: true });
+        }
+
+        document.querySelector('.next').onclick = () => move(1);
+        document.querySelector('.prev').onclick = () => move(-1);
+
+        // 자동 재생 (5초)
+        setInterval(() => move(1), 5000);
+    });
+</script>
         <button class="arrow prev">&#10094;</button>
         <button class="arrow next">&#10095;</button>
     </div>
