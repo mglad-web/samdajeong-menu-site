@@ -1080,7 +1080,74 @@
 
     </script>
 
+<div class="slider">
+    <div class="slides">
+        <img src="birth.png" alt="5월 생일 이벤트">
+        <img src="family.png" alt="가정의 달 프로모션">
+        <img src="parents.png" alt="어버이날 이벤트">
+    </div>
+    <button class="arrow prev">&#10094;</button>
+    <button class="arrow next">&#10095;</button>
+</div>
 
+<!-- ... (탭 버튼 및 컨테이너 부분 동일) ... -->
+
+<script>
+    // --- 슬라이더 기능 추가 시작 ---
+    const slides = document.querySelector('.slides');
+    const slideImg = document.querySelectorAll('.slides img');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    
+    let currentIdx = 0; // 현재 보이는 이미지 인덱스
+    const slideCount = slideImg.length;
+
+    function moveSlide(num) {
+        // 이미지를 가로로 이동시킴 (0, -100%, -200% ...)
+        slides.style.transform = 'translateX(' + (-num * 100) + '%)';
+        currentIdx = num;
+    }
+
+    nextBtn.addEventListener('click', function () {
+        if (currentIdx < slideCount - 1) {
+            moveSlide(currentIdx + 1);
+        } else {
+            // 마지막 장이면 첫 장으로 돌아가기
+            moveSlide(0);
+        }
+    });
+
+    prevBtn.addEventListener('click', function () {
+        if (currentIdx > 0) {
+            moveSlide(currentIdx - 1);
+        } else {
+            // 첫 장이면 마지막 장으로 가기
+            moveSlide(slideCount - 1);
+        }
+    });
+    // --- 슬라이더 기능 추가 끝 ---
+
+    // (기존 탭 관련 스크립트...)
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    function activateTab(tabName, scroll = true) {
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        const activeTab = document.querySelector(`.tab[data-tab="${tabName}"]`);
+        const activeContent = document.getElementById(tabName);
+        if (!activeTab || !activeContent) return;
+        activeTab.classList.add('active');
+        activeContent.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            activateTab(tab.dataset.tab);
+            history.replaceState(null, '', `?tab=${tab.dataset.tab}`);
+        });
+    });
+</script>
 
 </body>
 
