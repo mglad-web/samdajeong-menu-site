@@ -133,23 +133,21 @@ HTML
             </div>
         </div>
     </div>
-
-    <script>
-      <script>
+<script>
     document.addEventListener("DOMContentLoaded", function() {
         const slidesContainer = document.getElementById('promo-slides');
         const yuzuCard = document.getElementById('yuzu-card');
 
-        // --- 1. 날짜 설정 (진짜 현재 시간 사용) ---
+        // 1. 날짜 설정
         const now = new Date(); 
         const mayFirst = new Date('2026-05-01T00:00:00');
         const aprilFirst = new Date('2026-04-01T00:00:00');
 
-        // 2. 날짜별 이미지 설정
+        // 2. 날짜별 이미지 리스트
         let imageFiles = [];
         if (now >= mayFirst) {
             imageFiles = ['birth.png', 'parents.png', 'family.png'];
-            if(yuzuCard) yuzuCard.style.display = 'block'; // 5월부터 유즈 카드 노출
+            if(yuzuCard) yuzuCard.style.display = 'block';
         } else if (now >= aprilFirst) {
             imageFiles = ['sns4.png', 'seed.png', 'nature.png'];
             if(yuzuCard) yuzuCard.style.display = 'none';
@@ -158,12 +156,13 @@ HTML
             if(yuzuCard) yuzuCard.style.display = 'none';
         }
 
-        // 3. 슬라이더 이미지 생성 및 무한 루프 구성
+        // 3. 슬라이더 실행
         if (imageFiles.length > 0) {
+            // 무한 루프를 위한 이미지 배치
             const sliderHtml = [
-                imageFiles[imageFiles.length - 1], // 마지막 이미지 복제
+                imageFiles[imageFiles.length - 1], 
                 ...imageFiles, 
-                imageFiles[0] // 첫 이미지 복제
+                imageFiles[0]
             ].map(src => `<img src="${src}" alt="Promotion" onerror="this.src='https://via.placeholder.com/500x707?text=Image+Missing'">`).join('');
             
             slidesContainer.innerHTML = sliderHtml;
@@ -173,18 +172,19 @@ HTML
             
             function moveSlider() {
                 const width = slidesContainer.parentElement.clientWidth;
+                if(width === 0) return; // 너비가 0이면 실행 방지
                 slidesContainer.style.transition = 'transform 0.5s ease-in-out';
                 slidesContainer.style.transform = `translateX(${-width * index}px)`;
             }
 
-            // 초기 위치 잡기 (이미지 로딩 대기)
-            window.addEventListener('load', () => {
+            // 초기 위치 설정 (이미지 로드 완료 후 실행)
+            window.onload = function() {
                 const width = slidesContainer.parentElement.clientWidth;
                 slidesContainer.style.transition = 'none';
                 slidesContainer.style.transform = `translateX(${-width * index}px)`;
-            });
+            };
 
-            // 화살표 버튼 이벤트
+            // 버튼 클릭 이벤트
             document.querySelector('.next').onclick = () => {
                 if (index >= images.length - 1) return;
                 index++;
@@ -197,7 +197,7 @@ HTML
                 moveSlider();
             };
 
-            // 무한 루프 체크
+            // 무한 루프 전환
             slidesContainer.addEventListener('transitionend', () => {
                 const width = slidesContainer.parentElement.clientWidth;
                 if (index === 0) {
@@ -211,7 +211,7 @@ HTML
                 }
             });
 
-            // 자동 재생 (5초)
+            // 자동 재생
             setInterval(() => { 
                 if (index < images.length - 1) {
                     index++;
@@ -219,7 +219,7 @@ HTML
                 }
             }, 5000);
 
-            // 화면 크기 바뀔 때 위치 재조정
+            // 리사이즈 대응
             window.addEventListener('resize', () => {
                 const width = slidesContainer.parentElement.clientWidth;
                 slidesContainer.style.transition = 'none';
@@ -227,7 +227,7 @@ HTML
             });
         }
 
-        // --- 4. 탭 전환 로직 (기존 와인 리스트 등을 보여주기 위함) ---
+        // 4. 탭 전환 로직
         const tabs = document.querySelectorAll('.tab');
         const contents = document.querySelectorAll('.tab-content');
 
