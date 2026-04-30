@@ -1,3 +1,4 @@
+HTML
 <!doctype html>
 <html lang="ko">
 
@@ -7,160 +8,30 @@
     <title>삼다정 음료 메뉴</title>
 
     <style>
-        body {
-            font-family: 'Pretendard', sans-serif;
-            background: #f7f8fa;
-            margin: 0;
-            padding-bottom: 50px;
-        }
-
-        header {
-            padding: 20px;
-            text-align: center;
-            background: #324870;
-            color: #fff;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-
-        /* Slider */
-        .slider {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-            overflow: hidden;
-            border-radius: 10px;
-            background: #fff;
-        }
-
-        .slides {
-            display: flex;
-            transition: transform 0.6s ease-in-out;
-        }
-
-        .slides img {
-            width: 100%;
-            flex-shrink: 0;
-            display: block;
-        }
-
-        .arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 50%;
-            font-size: 18px;
-            z-index: 10;
-        }
-
+        body { font-family: 'Pretendard', sans-serif; background: #f7f8fa; margin: 0; padding-bottom: 50px; }
+        header { padding: 20px; text-align: center; background: #324870; color: #fff; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        
+        /* Slider 스타일 */
+        .slider { position: relative; width: 100%; max-width: 800px; margin: 20px auto; overflow: hidden; border-radius: 10px; background: #fff; height: 250px; }
+        .slides { display: flex; transition: transform 0.6s ease-in-out; height: 100%; }
+        .slides img { width: 100%; flex-shrink: 0; display: block; object-fit: cover; }
+        .arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); color: white; border: none; padding: 10px; cursor: pointer; border-radius: 50%; font-size: 18px; z-index: 10; }
         .prev { left: 10px; }
         .next { right: 10px; }
 
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin: 20px auto;
-            max-width: 900px;
-            padding: 0 15px;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px 5px;
-            border: none;
-            border-radius: 8px;
-            background: #e9ecf1;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .tab.active {
-            background: #324870;
-            color: #fff;
-        }
-
-        /* Menu Card */
-        .tab-content { display: none; }
+        /* Tabs 스타일 */
+        .tabs { display: flex; gap: 8px; margin: 20px auto; max-width: 900px; padding: 0 15px; }
+        .tab { flex: 1; padding: 12px 5px; border: none; border-radius: 8px; background: #e9ecf1; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .tab.active { background: #324870; color: #fff; }
+        .tab-content { display: none; padding: 0 15px; }
         .tab-content.active { display: block; }
 
-        .promo-banner {
-            background-color: #324870;
-            color: white;
-            font-weight: bold;
-            font-size: 20px;
-            padding: 15px;
-            text-align: center;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            text-align: left;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 30px 0 15px;
-            color: #333;
-        }
-
-        .sub-section-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin: 15px 0 10px;
-            color: #555;
-        }
-
-        .card {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .card h3 { margin: 0 0 6px; font-size: 17px; }
-
-        .desc {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            font-weight: bold;
-            color: #324870;
-            font-size: 15px;
-        }
-
-        .price-info {
-            font-size: 13px;
-            color: #888;
-            font-weight: normal;
-        }
-
-        @media (max-width: 480px) {
-            .tab { font-size: 14px; }
-            .price { flex-direction: column; align-items: flex-start; gap: 4px; }
-            .price-info { width: 100%; text-align: left; border-top: 1px solid #eee; pt: 4px; }
-        }
+        /* 카드 공통 스타일 */
+        .promo-banner { background-color: #324870; color: white; font-weight: bold; font-size: 20px; padding: 15px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
+        .card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .price { display: flex; justify-content: space-between; font-weight: bold; color: #324870; }
+        .desc { font-size: 14px; color: #666; margin-bottom: 10px; }
     </style>
 </head>
 
@@ -170,96 +41,16 @@
         <h2>PROMOTION & MENU</h2>
     </header>
 
-<!-- 프로모션 영역 -->
-<div class="slider">
-    <div class="slides" id="promo-slides">
-        <!-- 스크립트가 여기에 이미지를 자동으로 넣습니다 -->
-    </div>
-    <button class="arrow prev">&#10094;</button>
-    <button class="arrow next">&#10095;</button>
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const slidesContainer = document.getElementById('promo-slides');
-        const now = new Date();
-        const now = new Date('2026-05-01T00:00:01'); // 시간을 강제로 5월 1일로 설정
-        
-        
-        // 날짜 설정
-        const mayFirst = new Date('2026-05-01T00:00:00');
-        const aprilFirst = new Date('2026-04-01T00:00:00');
-
-        // 1. 날짜에 따른 이미지 명단 정의
-        let imageFiles = [];
-
-        if (now >= mayFirst) {
-            // 5월 1일부터 보여줄 이미지
-            imageFiles = ['birth.png', 'parents.png', 'family.png'];
-        } else if (now >= aprilFirst) {
-            // 4월 1일부터 4월 30일까지 보여줄 이미지
-            imageFiles = ['sns4.png', 'seed.png', 'nature.png'];
-        } else {
-            // 4월 이전
-            imageFiles = ['woman.jpeg', 'sns2.png'];
-        }
-
-        // 2. 이미지를 화면에 생성
-        if (imageFiles.length === 0) return;
-
-        // 슬라이더 무한 루프를 위해 (마지막이미지 - 전체이미지 - 첫번째이미지) 순서로 배치
-        const contentHtml = [
-            imageFiles[imageFiles.length - 1], // 마지막 복제
-            ...imageFiles,                     // 원본 리스트
-            imageFiles[0]                      // 첫번째 복제
-        ].map(src => `<img src="${src}" alt="Promotion">`).join('');
-
-        slidesContainer.innerHTML = contentHtml;
-
-        // 3. 슬라이더 작동 로직 (VS Code에서 수정 시 이 아래는 건드릴 필요 없음)
-        let index = 1;
-        let images = slidesContainer.querySelectorAll('img');
-        
-        function updateSlider() {
-            const width = slidesContainer.parentElement.clientWidth;
-            slidesContainer.style.transition = 'none';
-            slidesContainer.style.transform = `translateX(${-width * index}px)`;
-        }
-
-        // 초기 위치 잡기
-        window.onload = updateSlider;
-        window.onresize = updateSlider;
-
-        function move(dir) {
-            const width = slidesContainer.parentElement.clientWidth;
-            index += dir;
-            slidesContainer.style.transition = 'transform 0.5s ease-in-out';
-            slidesContainer.style.transform = `translateX(${-width * index}px)`;
-
-            slidesContainer.addEventListener('transitionend', () => {
-                if (index === 0) {
-                    index = images.length - 2;
-                    slidesContainer.style.transition = 'none';
-                    slidesContainer.style.transform = `translateX(${-width * index}px)`;
-                } else if (index === images.length - 1) {
-                    index = 1;
-                    slidesContainer.style.transition = 'none';
-                    slidesContainer.style.transform = `translateX(${-width * index}px)`;
-                }
-            }, { once: true });
-        }
-
-        document.querySelector('.next').onclick = () => move(1);
-        document.querySelector('.prev').onclick = () => move(-1);
-
-        // 자동 재생 (5초)
-        setInterval(() => move(1), 5000);
-    });
-</script>
+    <!-- 프로모션 슬라이더 영역 -->
+    <div class="slider">
+        <div class="slides" id="promo-slides">
+            <!-- 자바스크립트가 이미지를 여기에 동적으로 삽입합니다 -->
+        </div>
         <button class="arrow prev">&#10094;</button>
         <button class="arrow next">&#10095;</button>
     </div>
 
+    <!-- 탭 메뉴 -->
     <div class="tabs">
         <button class="tab active" data-tab="beer">Beer</button>
         <button class="tab" data-tab="soju">Soju</button>
@@ -268,50 +59,29 @@
     </div>
 
     <div class="container">
-
-        <!-- Beer Section -->
+        <!-- 맥주 섹션 -->
         <div class="tab-content active" id="beer">
             <div class="promo-banner">Beer</div>
-            
-            <div class="section-title">Draft</div>
             <div class="card">
                 <h3>산토리 더 프리미엄 몰츠</h3>
                 <div class="desc">Suntory The Premium Malt’s</div>
                 <div class="price"><span>GLASS</span> ₩10,000</div>
             </div>
-            <!-- ... 중략 (다른 맥주들 동일 구조) ... -->
             <div class="card">
                 <h3>카스</h3>
                 <div class="desc">Cass</div>
                 <div class="price"><span>GLASS</span> ₩10,000</div>
             </div>
-
-            <div class="section-title">Bottled</div>
-            <div class="card">
-                <h3>테라</h3>
-                <div class="desc">Terra</div>
-                <div class="price"><span>BOTTLED</span> ₩8,000</div>
-            </div>
         </div>
 
-        <!-- Soju Section -->
+        <!-- 소주 섹션 -->
         <div class="tab-content" id="soju">
             <div class="promo-banner">Soju</div>
-            <div class="card">
-                <h3>일품진로 오크 43</h3>
-                <div class="desc">Ilpoom Jinro Oak 43</div>
-                <div class="price">BOTTLED ₩53,000</div>
-            </div>
-            
-            <div class="card" id="yuzu-card" style="display: none;">
+            <div class="card" id="yuzu-card" style="display:none;">
                 <h3>츠루우메 유즈</h3>
                 <div class="desc">Tsuru-ume Yuzu</div>
-                <div class="price">
-                    <span>HIGHBALL ₩10,000 / TOKURI ₩20,000</span>
-                    <span class="price-info">BOTTLED ₩80,000</span>
-                </div>
+                <div class="price">HIGHBALL ₩10,000 / BOTTLE ₩80,000</div>
             </div>
-
             <div class="card">
                 <h3>한라산 오리지널</h3>
                 <div class="desc">Hallasan Original</div>
@@ -319,154 +89,116 @@
             </div>
         </div>
 
-        <!-- Wine Section -->
+        <!-- 와인 섹션 -->
         <div class="tab-content" id="wine">
             <div class="promo-banner">Wine</div>
-
-            <div class="section-title">House Wine</div>
             <div class="card">
-                <h3>로버트 몬다비 프라이빗 셀렉션 (Red)</h3>
-                <div class="desc">Robert Mondavi Private Selection Cabernet Sauvignon</div>
-                <div class="price">
-                    <span>G ₩15,000 / B ₩50,000</span>
-                    <span class="price-info">DRY 5/5 | BODY 4/5</span>
-                </div>
-            </div>
-
-            <div class="section-title">Champagne & Sparkling</div>
-            <div class="card">
-                <h3>돔 페리뇽</h3>
-                <div class="desc">Dom Perignon</div>
-                <div class="price">
-                    <span>BOTTLE ₩590,000</span>
-                    <span class="price-info">DRY 5/5 | BODY 3/5</span>
-                </div>
-            </div>
-            
-            <div class="sub-section-title">France</div>
-            <div class="card">
-                <h3>생샤르니 레 크레</h3>
-                <div class="desc">Sainchargny Les Crays</div>
-                <div class="price">
-                    <span>BOTTLE ₩65,000</span>
-                    <span class="price-info">DRY 5/5 | BODY 1/5</span>
-                </div>
+                <h3>로버트 몬다비 (Red)</h3>
+                <div class="desc">Robert Mondavi Private Selection</div>
+                <div class="price">GLASS ₩15,000 / BOTTLE ₩50,000</div>
             </div>
         </div>
 
-        <!-- Soft Drink Section -->
+        <!-- 음료 섹션 -->
         <div class="tab-content" id="soft">
             <div class="promo-banner">Soft Drink</div>
             <div class="card">
-                <h3>산펠레그리노 스파클링 워터 (500ml)</h3>
-                <div class="desc">S.pellegrino Sparkling Water</div>
-                <div class="price">BOTTLED ₩6,000</div>
-            </div>
-            <div class="card">
-                <h3>펩시 제로 슈거 (355ml)</h3>
+                <h3>펩시 제로 슈거</h3>
                 <div class="desc">Pepsi Zero Sugar</div>
                 <div class="price">BOTTLED ₩3,000</div>
             </div>
         </div>
-
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // --- 1. 날짜 제어 (슬라이더 및 특정 메뉴) ---
-            const now = new Date();
-            const targetDate = new Date('2026-04-01T00:00:00');
-            const slidesContainer = document.getElementById('main-slides');
+            const slidesContainer = document.getElementById('promo-slides');
             const yuzuCard = document.getElementById('yuzu-card');
 
-            if (now >= targetDate) {
-                document.querySelectorAll('.old-promo').forEach(el => el.remove());
-                document.querySelectorAll('.new-promo').forEach(el => el.style.display = 'block');
-                if(yuzuCard) yuzuCard.style.display = 'block';
+            // [테스트] 5월 1일로 날짜 강제 설정 (실제 배포시에는 아래 줄을 삭제하거나 주석처리 하세요)
+            const now = new Date('2026-05-01T00:00:01'); 
+            // const now = new Date(); // 실배포용
+
+            const mayFirst = new Date('2026-05-01T00:00:00');
+            const aprilFirst = new Date('2026-04-01T00:00:00');
+
+            // 1. 날짜별 이미지 설정
+            let imageFiles = [];
+            if (now >= mayFirst) {
+                imageFiles = ['birth.png', 'parents.png', 'family.png'];
+                if(yuzuCard) yuzuCard.style.display = 'block'; // 5월부터 유즈 카드 노출
+            } else if (now >= aprilFirst) {
+                imageFiles = ['sns4.png', 'seed.png', 'nature.png'];
             } else {
-                document.querySelectorAll('.new-promo').forEach(el => el.remove());
-                document.querySelectorAll('.old-promo').forEach(el => el.style.display = 'block');
+                imageFiles = ['woman.jpeg', 'sns2.png'];
             }
 
-            // --- 2. 슬라이더 로직 ---
-            let imgs = Array.from(slidesContainer.querySelectorAll('img'));
-            if (imgs.length > 0) {
-                // 클론 생성
-                const firstClone = imgs[0].cloneNode(true);
-                const lastClone = imgs[imgs.length - 1].cloneNode(true);
-                firstClone.id = 'first-clone';
-                lastClone.id = 'last-clone';
-                slidesContainer.appendChild(firstClone);
-                slidesContainer.insertBefore(lastClone, slidesContainer.firstChild);
+            // 2. 슬라이더 이미지 생성
+            if (imageFiles.length > 0) {
+                const sliderHtml = [
+                    imageFiles[imageFiles.length - 1], 
+                    ...imageFiles, 
+                    imageFiles[0]
+                ].map(src => `<img src="${src}" alt="Promotion" onerror="this.src='https://via.placeholder.com/800x250?text=Image+Not+Found'">`).join('');
+                
+                slidesContainer.innerHTML = sliderHtml;
 
-                let allImgs = Array.from(slidesContainer.querySelectorAll('img'));
+                // 3. 슬라이더 구동 로직
                 let index = 1;
-                let width = slidesContainer.parentElement.clientWidth;
-
-                function moveToIndex(animate = true) {
-                    slidesContainer.style.transition = animate ? 'transform 0.6s ease-in-out' : 'none';
+                const images = slidesContainer.querySelectorAll('img');
+                
+                function moveSlider() {
+                    const width = slidesContainer.parentElement.clientWidth;
+                    slidesContainer.style.transition = 'transform 0.5s ease-in-out';
                     slidesContainer.style.transform = `translateX(${-width * index}px)`;
                 }
 
-                moveToIndex(false);
+                // 초기 위치 설정
+                setTimeout(() => {
+                    const width = slidesContainer.parentElement.clientWidth;
+                    slidesContainer.style.transform = `translateX(${-width * index}px)`;
+                }, 100);
 
-                document.querySelector('.next').addEventListener('click', () => {
-                    if (index >= allImgs.length - 1) return;
+                document.querySelector('.next').onclick = () => {
+                    if (index >= images.length - 1) return;
                     index++;
-                    moveToIndex();
-                });
+                    moveSlider();
+                };
 
-                document.querySelector('.prev').addEventListener('click', () => {
+                document.querySelector('.prev').onclick = () => {
                     if (index <= 0) return;
                     index--;
-                    moveToIndex();
-                });
+                    moveSlider();
+                };
 
                 slidesContainer.addEventListener('transitionend', () => {
-                    if (allImgs[index].id === 'first-clone') {
+                    const width = slidesContainer.parentElement.clientWidth;
+                    if (index === 0) {
+                        index = images.length - 2;
+                        slidesContainer.style.transition = 'none';
+                        slidesContainer.style.transform = `translateX(${-width * index}px)`;
+                    } else if (index === images.length - 1) {
                         index = 1;
-                        moveToIndex(false);
-                    }
-                    if (allImgs[index].id === 'last-clone') {
-                        index = allImgs.length - 2;
-                        moveToIndex(false);
+                        slidesContainer.style.transition = 'none';
+                        slidesContainer.style.transform = `translateX(${-width * index}px)`;
                     }
                 });
 
-                // 자동 재생
-                setInterval(() => {
-                    if (index >= allImgs.length - 1) return;
-                    index++;
-                    moveToIndex();
-                }, 5000);
-
-                window.addEventListener('resize', () => {
-                    width = slidesContainer.parentElement.clientWidth;
-                    moveToIndex(false);
-                });
+                setInterval(() => { index++; moveSlider(); }, 5000);
             }
 
-            // --- 3. 탭 전환 로직 ---
+            // 4. 탭 전환 로직
             const tabs = document.querySelectorAll('.tab');
             const contents = document.querySelectorAll('.tab-content');
 
-            function activateTab(tabName) {
-                tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tabName));
-                contents.forEach(c => c.classList.toggle('active', c.id === tabName));
-            }
-
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    const name = tab.dataset.tab;
-                    activateTab(name);
-                    history.replaceState(null, '', `?tab=${name}`);
+                    const target = tab.dataset.tab;
+                    tabs.forEach(t => t.classList.toggle('active', t === tab));
+                    contents.forEach(c => c.classList.toggle('active', c.id === target));
                 });
             });
-
-            const params = new URLSearchParams(window.location.search);
-            activateTab(params.get('tab') || 'beer');
         });
     </script>
 </body>
 </html>
-
